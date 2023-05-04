@@ -1,7 +1,7 @@
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.config import Config
-import sqlite3
+#import sqlite3
 
 res=''
 
@@ -28,16 +28,16 @@ class MyApp(App):
     
     def btn_press(self, instance):
         print('кнопка нажата')
-        instance.text = str(self.db_res)
+        #instance.text = str(self.db_res)
 
 
-    def db_res(self):
-        con = sqlite3.connect('test.db')
-        curObj = con.cursor()
-        curObj.execute("SELECT name FROM manga WHERE id = '2'")
-        rows = curObj.fetchall()
-        print(rows)
-        return rows[1][1]
+    #def db_res(self):
+    #    con = sqlite3.connect('test.db')
+    #    curObj = con.cursor()
+     #   curObj.execute("SELECT name FROM manga WHERE id = '2'")
+      #  rows = curObj.fetchall()
+       # print(rows)
+        #return rows[1][1]
 
 
 if __name__ == "__main__":
