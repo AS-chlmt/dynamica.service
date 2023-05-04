@@ -7,7 +7,7 @@ class MyApp(App):
     
     def btn_press(self, instance):
         print('кнопка нажата')
-        instance.text='я нажата'
+        instance.text='я нажата и все'
 
 if __name__ == "__main__":
     MyApp().run()
