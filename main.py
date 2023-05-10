@@ -20,7 +20,7 @@ class MyApp(App):
         #print(' '.join(map(rows, q)))
         return Button(text = "моя первая кнопка",
                       font_size=30,
-                      on_press=read_sqlite_table,
+                      on_press=self.db_res,
                       background_color=[1,0,0,1],
                       background_normal='',
                       size_hint = (.5, .25),
@@ -30,11 +30,42 @@ class MyApp(App):
     def btn_press(self, instance):
         
         print('кнопка нажата')
-        arr = []
-        instance.text=str(self.db_res)
+        instance.text=self.db_res(15)
 
 
-    def db_res(self):
+    def db_res(self, instance, records):
+        sqlite_connection = sqlite3.connect('test.db')
+        cursor = sqlite_connection.cursor()
+        print("Подключен к SQLite")
+
+        cursor.execute("SELECT * FROM users")
+        records = cursor.fetchall()
+        print("Всего строк:  ", len(records))
+        print("Вывод каждой строки")
+        for row in records:
+            print("ID:", row[0])
+            print("Имя:", row[1])
+            print("Почта:", row[2])
+            instance.text=row[1]
+        
+        cursor.close()
+        
+        return row[1]
+
+
+        
+        '''except sqlite3.Error as error:
+            print("Ошибка при работе с SQLite", error)
+        finally:
+            if sqlite_connection:
+                sqlite_connection.close()
+                print("Соединение с SQLite закрыто")
+            
+            
+            
+            
+            
+            
         con = sqlite3.connect('test.db')
         curObj = con.cursor()
         curObj.execute("SELECT name FROM manga WHERE id = '2'")
@@ -43,7 +74,7 @@ class MyApp(App):
     
         for i in rows:
             print(rows[1])
-
+'''
 class Library():
 	def __init__(self):
 		self.libra = []
@@ -75,12 +106,11 @@ class Library():
 
 def read_sqlite_table(records):
     try:
-        sqlite_connection = sqlite3.connect('sqlite_python.db')
+        sqlite_connection = sqlite3.connect('test.db')
         cursor = sqlite_connection.cursor()
         print("Подключен к SQLite")
 
-        sqlite_select_query = "SELECT * FROM manga"
-        cursor.execute(sqlite_select_query)
+        cursor.execute("SELECT * FROM users")
         records = cursor.fetchall()
         print("Всего строк:  ", len(records))
         print("Вывод каждой строки")
@@ -88,8 +118,6 @@ def read_sqlite_table(records):
             print("ID:", row[0])
             print("Имя:", row[1])
             print("Почта:", row[2])
-            print("Добавлен:", row[3])
-            print("Зарплата:", row[4], end="\n\n")
 
         cursor.close()
 
