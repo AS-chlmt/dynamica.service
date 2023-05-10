@@ -39,7 +39,8 @@ class MyApp(App):
             cursor = sqlite_connection.cursor()
             print("Подключен к SQLite")
 
-            cursor.execute("INSERT INTO users (id, login, password) VALUES (3, 'dog', 2222)") '''уникальный id, будет ругаться'''
+            cursor.execute("INSERT INTO users (id, login, password) VALUES (3, 'dog', 2222)") 
+            '''уникальный id, будет ругаться'''
             sqlite_connection.commit()
             cursor.execute("SELECT * FROM USERS")
             records = cursor.fetchall()
