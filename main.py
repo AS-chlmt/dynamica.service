@@ -33,28 +33,23 @@ class MyApp(App):
         instance.text=self.db_res(15)
 
 
-    def db_res(self, instance, records):
-        sqlite_connection = sqlite3.connect('test.db')
-        cursor = sqlite_connection.cursor()
-        print("Подключен к SQLite")
+    def db_res(self, records):
+        try:
+            sqlite_connection = sqlite3.connect('test.db')
+            cursor = sqlite_connection.cursor()
+            print("Подключен к SQLite")
 
-        cursor.execute("SELECT * FROM users")
-        records = cursor.fetchall()
-        print("Всего строк:  ", len(records))
-        print("Вывод каждой строки")
-        for row in records:
-            print("ID:", row[0])
-            print("Имя:", row[1])
-            print("Почта:", row[2])
-            instance.text=row[1]
-        
-        cursor.close()
-        
-        return row[1]
+            cursor.execute("INSERT INTO users (id, login, password) VALUES (3, 'dog', 2222)") '''уникальный id, будет ругаться'''
+            sqlite_connection.commit()
+            cursor.execute("SELECT * FROM USERS")
+            records = cursor.fetchall()
+            print("Всего строк:  ", len(records))
+            print("Вывод каждой строки")
+            
 
 
         
-        '''except sqlite3.Error as error:
+        except sqlite3.Error as error:
             print("Ошибка при работе с SQLite", error)
         finally:
             if sqlite_connection:
@@ -65,7 +60,7 @@ class MyApp(App):
             
             
             
-            
+        '''   
         con = sqlite3.connect('test.db')
         curObj = con.cursor()
         curObj.execute("SELECT name FROM manga WHERE id = '2'")
